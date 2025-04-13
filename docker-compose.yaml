@@ -1,0 +1,47 @@
+services:
+  frontend:
+    build:
+      context:
+        ./frontend
+    ports:
+      - "80:80"
+
+  backend:
+    build:
+      context:
+        ./backend
+
+    env_file: backend/.env
+    environment:
+      DATABASE_USERNAME: ${DATABASE_USERNAME}
+      DATABASE_PASSWORD: ${DATABASE_PASSWORD}
+      DATABASE_HOST: postgres
+      DATABASE_PORT: 5432
+      DATABASE_NAME: ${DATABASE_NAME}
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - "8000:8000"
+
+  postgres:
+    image: bitnami/postgresql:latest
+    env_file: backend/.env
+    environment:
+      POSTGRESQL_USERNAME: ${DATABASE_USERNAME}
+      POSTGRESQL_PASSWORD: ${DATABASE_PASSWORD}
+      POSTGRESQL_DATABASE: ${DATABASE_NAME}
+    volumes:
+      - postgresql_data:/bitnami/postgresql
+    ports:
+      - "5432:5432"  # Проброс порта (опционально)
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ${DATABASE_USERNAME} -d ${DATABASE_NAME}" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+
+volumes:
+  postgresql_data:
+    driver: local

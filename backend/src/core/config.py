@@ -6,7 +6,7 @@ class DBConfig(BaseSettings):
     database_host: str
     database_port: int
     database_username: str
-    database_password: str = ''
+    database_password: str
     database_name: str
 
 
