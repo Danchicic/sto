@@ -69,3 +69,4 @@ class Car(Base):
     engine_power: Mapped[int] = mapped_column()
     features: Mapped[str] = mapped_column()
     cost: Mapped[int] = mapped_column()
+    mileage: Mapped[int] = mapped_column()
