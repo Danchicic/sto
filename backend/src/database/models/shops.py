@@ -1,6 +1,6 @@
 from sqlalchemy.orm import mapped_column, Mapped
 
-from . import Base
+from src.database import Base
 
 
 class Shop(Base):
@@ -8,9 +8,3 @@ class Shop(Base):
 
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column()
-
-
-class Test(Base):
-    __tablename__ = "table"
-
-    id: Mapped[int] = mapped_column(primary_key=True)
