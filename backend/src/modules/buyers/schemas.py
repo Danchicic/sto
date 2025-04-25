@@ -1,21 +1,31 @@
 from typing import Optional
 
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
+
+from src.core.schemas import BaseTypeModel
 
 
-class BuyerCreate(BaseModel):
+class BaseBuyer(BaseModel):
     fio: str
     latitude: float
     longitude: float
     year: int
-    company_id: int
-    model_id: int
-    auto_type_id: int
     cost: int
 
 
-class Buyer(BuyerCreate):
+class BuyerCreate(BaseBuyer):
+    company_id: int
+    model_id: int
+    auto_type_id: int
+
+
+class Buyer(BaseBuyer):
     id: Optional[int]
+
+    model_config = ConfigDict(from_attributes=True)
+    company: BaseTypeModel
+    model: BaseTypeModel
+    auto_type: BaseTypeModel
 
 
 class BuyersConditionals(BaseModel):
@@ -25,7 +35,10 @@ class BuyersConditionals(BaseModel):
     cost_max: Optional[int]
     cost_min: Optional[int]
     year: Optional[int]
+    model_config = ConfigDict(from_attributes=True)
 
 
 class Buyers(BaseModel):
     buyers: list[Buyer]
+
+    model_config = ConfigDict(from_attributes=True)

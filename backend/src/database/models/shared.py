@@ -12,8 +12,7 @@ class TransmissionType(Base):
 
     name: Mapped[str] = mapped_column()
     cars: Mapped[list["Car"]] = relationship(
-        back_populates="transmission_type",
-        cascade="all, delete-orphan"
+        back_populates="transmission_type", cascade="all, delete-orphan"
     )
 
 
@@ -24,11 +23,11 @@ class CarType(Base):
     name: Mapped[str] = mapped_column()
     cars: Mapped[list["Car"]] = relationship(
         back_populates="auto_type",
-        cascade="all, delete-orphan"
+        cascade="all, delete-orphan",
     )
     buyers: Mapped[list["Buyer"]] = relationship(
         back_populates="auto_type",
-        cascade="all, delete-orphan"
+        cascade="all, delete-orphan",
     )
 
 
@@ -39,11 +38,11 @@ class CarsModel(Base):
     name: Mapped[str] = mapped_column()
     cars: Mapped[list["Car"]] = relationship(
         back_populates="model",
-        cascade="all, delete-orphan"
+        cascade="all, delete-orphan",
     )
     buyers: Mapped[list["Buyer"]] = relationship(
         back_populates="model",
-        cascade="all, delete-orphan"
+        cascade="all, delete-orphan",
     )
 
 
@@ -54,11 +53,11 @@ class CompanyName(Base):
     name: Mapped[str] = mapped_column()
     cars: Mapped[list["Car"]] = relationship(
         back_populates="company",
-        cascade="all, delete-orphan"
+        cascade="all, delete-orphan",
     )
     buyers: Mapped[list["Buyer"]] = relationship(
         back_populates="company",
-        cascade="all, delete-orphan"
+        cascade="all, delete-orphan",
     )
 
 
@@ -86,15 +85,15 @@ class Buyer(Base):
 
     company: Mapped["CompanyName"] = relationship(
         back_populates="buyers",
-        lazy='joined',
+        lazy="joined",
     )
     model: Mapped["CarsModel"] = relationship(
         back_populates="buyers",
-        lazy='joined',
+        lazy="joined",
     )
     auto_type: Mapped[Optional["CarType"]] = relationship(
         back_populates="buyers",
-        lazy='joined',
+        lazy="joined",
     )
 
 
@@ -126,18 +125,17 @@ class Car(Base):
 
     company: Mapped["CompanyName"] = relationship(
         back_populates="cars",
-        lazy='joined',
+        lazy="joined",
     )
     model: Mapped["CarsModel"] = relationship(
         back_populates="cars",
-        lazy='joined',
+        lazy="joined",
     )
     transmission_type: Mapped[Optional["TransmissionType"]] = relationship(
         back_populates="cars",
-        lazy='joined',
-
+        lazy="joined",
     )
     auto_type: Mapped[Optional["CarType"]] = relationship(
         back_populates="cars",
-        lazy='joined',
+        lazy="joined",
     )

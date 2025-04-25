@@ -8,9 +8,12 @@ from .depends import get_buyers_conditionals
 router = APIRouter(prefix="/buyers", tags=["Buyers"])
 
 
-@router.get("/")
+@router.get(
+    "/",
+    response_model=schemas.Buyers,
+)
 async def get_all_buyers():
-    return await BuyersRepository().get_all()
+    return schemas.Buyers(buyers=await BuyersRepository().get_all())
 
 
 @router.get("/with_conditionals")

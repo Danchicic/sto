@@ -2,12 +2,18 @@ from fastapi import APIRouter
 
 from src.repositories.repositories import CarsRepository
 
+from . import schemas
+
 router = APIRouter(prefix="/cars", tags=["Cars"])
 
 
-@router.get("/")
+@router.get(
+    "/",
+    response_model=schemas.Cars,
+)
 async def get_all_cars():
-    await CarsRepository().get_all()
+    res = await CarsRepository().get_all()
+    return schemas.Cars(cars=res)
 
 
 @router.get("/less_than_30")
