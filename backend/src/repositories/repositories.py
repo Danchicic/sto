@@ -1,8 +1,7 @@
 from sqlalchemy import select
 
 from src.database import async_session
-from src.database.models.buyers import Buyer
-from src.database.models.cars import Car
+from src.database.models.shared import Buyer, Car
 from src.database.models.shops import Shop
 
 from . import SQLAlchemyRepository
