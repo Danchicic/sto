@@ -1,5 +1,5 @@
 from sqlalchemy import ForeignKey
-from sqlalchemy.orm import mapped_column, Mapped
+from sqlalchemy.orm import Mapped, mapped_column
 
 from src.database import Base
 
@@ -37,32 +37,19 @@ class Car(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
 
     company_id: Mapped[int] = mapped_column(
-        ForeignKey(
-            "company_names.id",
-            ondelete='CASCADE'
-        ),
+        ForeignKey("company_names.id", ondelete="CASCADE"),
     )
 
     model_id: Mapped[int] = mapped_column(
-        ForeignKey(
-            "cars_models.id",
-            ondelete='CASCADE'
-        ),
+        ForeignKey("cars_models.id", ondelete="CASCADE"),
     )
 
     transmission_type_id: Mapped[int] = mapped_column(
-        ForeignKey(
-            "transmission_types.id",
-            ondelete='SET NULL'
-        ),
-        nullable=True
+        ForeignKey("transmission_types.id", ondelete="SET NULL"), nullable=True
     )
 
     auto_type_id: Mapped[int] = mapped_column(
-        ForeignKey(
-            "car_types.id", ondelete='SET NULL'
-        ),
-        nullable=True
+        ForeignKey("car_types.id", ondelete="SET NULL"), nullable=True
     )
 
     year: Mapped[int] = mapped_column()

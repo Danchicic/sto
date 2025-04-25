@@ -1,28 +1,41 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
 
-router = APIRouter(prefix='/buyers', tags=["Buyers"])
+from src.repositories.repositories import BuyersRepository
+
+from . import schemas
+from .depends import get_buyers_conditionals
+
+router = APIRouter(prefix="/buyers", tags=["Buyers"])
 
 
 @router.get("/")
 async def get_all_buyers():
-    pass
+    return await BuyersRepository().get_all()
 
 
 @router.get("/with_conditionals")
-async def get_buyers_with_conditionals():
-    pass
+async def get_buyers_with_conditionals(
+    conditionals: schemas.BuyersConditionals = Depends(get_buyers_conditionals),
+):
+    return schemas.Buyers(
+        buyers=(
+            await BuyersRepository().get_values_by_conditionals(
+                conditionals.model_dump()
+            )
+        )
+    )
 
 
 @router.get("/{model}")
-async def get_buyers_by_model(model: str):
-    pass
+async def get_buyers_by_model(model_id: int):
+    await BuyersRepository().get_buyers_by_model(model_id)
 
 
-@router.post("/buyers")
-async def create_buyer():
-    pass
+@router.post("/")
+async def create_buyer(buyer: schemas.BuyerCreate) -> schemas.Buyer:
+    return await BuyersRepository().add_one(buyer.model_dump())
 
 
-@router.delete('/buyers/{id}')
+@router.delete("/{id}")
 async def delete_buyer(id: int):
-    pass
+    await BuyersRepository().delete_by_id(id=id)
