@@ -13,20 +13,17 @@ router = APIRouter(prefix="/buyers", tags=["Buyers"])
     response_model=schemas.Buyers,
 )
 async def get_all_buyers():
-    return schemas.Buyers(buyers=await BuyersRepository().get_all())
+    return {"buyers": await BuyersRepository().get_all()}
 
 
 @router.get("/with_conditionals")
 async def get_buyers_with_conditionals(
-    conditionals: schemas.BuyersConditionals = Depends(get_buyers_conditionals),
+        conditionals: schemas.BuyersConditionals = Depends(get_buyers_conditionals),
 ):
-    return schemas.Buyers(
-        buyers=(
-            await BuyersRepository().get_values_by_conditionals(
-                conditionals.model_dump()
-            )
-        )
-    )
+    return {
+        "buyers": await BuyersRepository().get_values_by_conditionals(
+            conditionals.model_dump()
+        )}
 
 
 @router.get("/{model}")

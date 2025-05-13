@@ -13,7 +13,7 @@ router = APIRouter(prefix="/cars", tags=["Cars"])
 )
 async def get_all_cars():
     res = await CarsRepository().get_all()
-    return schemas.Cars(cars=res)
+    return {"cars": res}
 
 
 @router.get("/less_than_30")

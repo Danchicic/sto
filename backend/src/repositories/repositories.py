@@ -14,7 +14,7 @@ class ShopsRepository(SQLAlchemyRepository):
 class BuyersRepository(SQLAlchemyRepository):
     model = Buyer
 
-    async def get_buyers_by_model(self, model_id: int):
+    async def get_buyers_by_model(self, model_id: int) -> list[Buyer]:
         async with async_session() as session:
             query = select(self.model).where(self.model.model_id == model_id)
             chunked_res = await session.execute(query)

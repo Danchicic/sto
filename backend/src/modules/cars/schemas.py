@@ -12,6 +12,7 @@ class Car(BaseModel):
     auto_type: BaseTypeModel
     model: BaseTypeModel
     company: BaseTypeModel
+    cost:int
     model_config = ConfigDict(from_attributes=True)
 
 
