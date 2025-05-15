@@ -1,5 +1,4 @@
 from fastapi import APIRouter
-
 from src.repositories.repositories import CarsRepository
 
 from . import schemas
@@ -16,16 +15,29 @@ async def get_all_cars():
     return {"cars": res}
 
 
-@router.get("/less_than_30")
+@router.get("/less_than_30",
+            response_model=schemas.Cars,
+            )
 async def get_cars_less_than_30():
-    pass
+    res = await CarsRepository().get_values_by_conditionals(
+        conditionals={
+            "mileage_max": 30000
+        }
+    )
+    return {"cars": res}
 
 
-@router.get("/new")
+@router.get("/new", response_model=schemas.Cars, )
 async def get_new_cars():
-    pass
+    res = await CarsRepository().get_values_by_conditionals(
+        conditionals={
+            "auto_type_id": 1
+        }
+    )
+    return {"cars": res}
 
 
-@router.get("/most_expensive")
+@router.get("/most_expensive", response_model=schemas.CarResponse)
 async def get_most_expensive_car():
-    pass
+    res = await CarsRepository().get_most_expensive()
+    return {"car": res}

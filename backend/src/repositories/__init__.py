@@ -57,6 +57,18 @@ class SQLAlchemyRepository(AbstractRepository):
             return res_chunked.scalars().one_or_none()
 
     async def get_values_by_conditionals(self, conditionals: dict):
+        """
+        :param conditionals:
+            dict where key is a column of model, value is value for comparison,
+            for equality key must contain only column name, and value for equality
+            you can use conditional less(<=) or over(>=)
+            for this condition key must have postfix _min, max, before column name like:
+            {
+                cost_max: 100, # will be used cost <= 100
+                cost_min: 20, # will be used cost >= 100
+            }
+        :return: list of models
+        """
         conditions = []
         for condition_column_name, condition_value in conditionals.items():
             if condition_value is None:
@@ -83,7 +95,7 @@ class SQLAlchemyRepository(AbstractRepository):
                     conditions.append(car_filtering_column <= condition_value)
                 case "min":
                     conditions.append(car_filtering_column >= condition_value)
-                case _:
+                case "equality":
                     conditions.append(car_filtering_column == condition_value)
 
         async with async_session() as session:

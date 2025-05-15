@@ -12,9 +12,14 @@ class Car(BaseModel):
     auto_type: BaseTypeModel
     model: BaseTypeModel
     company: BaseTypeModel
-    cost:int
+    cost: int
+    mileage: int
     model_config = ConfigDict(from_attributes=True)
 
 
 class Cars(BaseModel):
     cars: list[Car]
+
+
+class CarResponse(BaseModel):
+    car: Car

@@ -1,4 +1,4 @@
-from sqlalchemy import select
+from sqlalchemy import select, func
 
 from src.database import async_session
 from src.database.models.shared import Buyer, Car
@@ -23,3 +23,12 @@ class BuyersRepository(SQLAlchemyRepository):
 
 class CarsRepository(SQLAlchemyRepository):
     model = Car
+
+    async def get_most_expensive(self):
+        async with async_session() as session:
+            subquery = select(func.max(self.model.cost))
+            query = select(self.model).where(
+                self.model.cost == subquery
+            )
+            chunked_res = await session.execute(query)
+            return chunked_res.scalars().one_or_none()
