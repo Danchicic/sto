@@ -2,10 +2,9 @@ import logging
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
-from starlette.middleware.cors import CORSMiddleware
-
 from src.database import init_models
 from src.routes import main_router
+from starlette.middleware.cors import CORSMiddleware
 
 
 @asynccontextmanager

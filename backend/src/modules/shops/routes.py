@@ -1,5 +1,4 @@
 from fastapi import APIRouter
-
 from src.repositories.repositories import ShopsRepository
 
 router = APIRouter(prefix="/shops", tags=["Shops"])

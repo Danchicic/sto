@@ -1,5 +1,4 @@
 from fastapi import APIRouter, Depends
-
 from src.repositories.repositories import BuyersRepository
 
 from . import schemas
@@ -18,12 +17,13 @@ async def get_all_buyers():
 
 @router.get("/with_conditionals")
 async def get_buyers_with_conditionals(
-        conditionals: schemas.BuyersConditionals = Depends(get_buyers_conditionals),
+    conditionals: schemas.BuyersConditionals = Depends(get_buyers_conditionals),
 ):
     return {
         "buyers": await BuyersRepository().get_values_by_conditionals(
             conditionals.model_dump()
-        )}
+        )
+    }
 
 
 @router.get("/{model}")

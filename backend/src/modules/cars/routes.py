@@ -15,24 +15,24 @@ async def get_all_cars():
     return {"cars": res}
 
 
-@router.get("/less_than_30",
-            response_model=schemas.Cars,
-            )
+@router.get(
+    "/less_than_30",
+    response_model=schemas.Cars,
+)
 async def get_cars_less_than_30():
     res = await CarsRepository().get_values_by_conditionals(
-        conditionals={
-            "mileage_max": 30000
-        }
+        conditionals={"mileage_max": 30000}
     )
     return {"cars": res}
 
 
-@router.get("/new", response_model=schemas.Cars, )
+@router.get(
+    "/new",
+    response_model=schemas.Cars,
+)
 async def get_new_cars():
     res = await CarsRepository().get_values_by_conditionals(
-        conditionals={
-            "auto_type_id": 1
-        }
+        conditionals={"auto_type_id": 1}
     )
     return {"cars": res}
 

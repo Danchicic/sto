@@ -3,7 +3,6 @@ from typing import Optional
 
 from fastapi import HTTPException
 from sqlalchemy import delete, insert, select
-
 from src.database import async_session
 
 

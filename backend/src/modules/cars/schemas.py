@@ -1,5 +1,4 @@
 from pydantic import BaseModel, ConfigDict
-
 from src.core.schemas import BaseTypeModel
 
 
