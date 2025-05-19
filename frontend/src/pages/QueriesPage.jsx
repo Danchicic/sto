@@ -11,8 +11,8 @@ function QueriesPage() {
     }
 
     const componentsConfiguration = {
-        "BuyersWithParams": <BuyersWithParams/>,
-        "BuyersByModels": <BuyersByModels/>,
+        "BuyersWithParams": <BuyersWithParams key={1}/>,
+        "BuyersByModels": <BuyersByModels key={2}/>,
     }
 
     return (
@@ -21,6 +21,7 @@ function QueriesPage() {
             <TabsSection active={chosenQuery} onChange={changeQuery}/>
             {Object.entries(componentsConfiguration).map(([tabName, component]) => {
                 if (tabName === chosenQuery) {
+
                     return (component)
                 }
             })}
