@@ -80,7 +80,7 @@ const Auth = () => {
                             onAccept={(value) => setPhoneNumber(value)}
                             name="phone_number"
                             placeholder="Номер телефона:"
-                            inputType="text"
+                            inputtype="text"
                             className="rounded p-1 border-2 border-emerald-100 focus:outline-none"
                         />
                         {phoneNumberError && <span className="text-red-500 text-sm w-47">{phoneNumberError}</span>}
@@ -94,7 +94,7 @@ const Auth = () => {
                         <p>
                             <IMaskInput
                                 value={phoneNumber}
-                                inputType="text"
+                                inputtype="text"
                                 className="rounded p-1 border-2 border-emerald-100 focus:outline-none bg-gray-100 text-gray-400"
                                 disabled
                             />
@@ -110,7 +110,7 @@ const Auth = () => {
                     onAccept={(value) => handleCodeChange(value)}
                     name="verification_code"
                     placeholder="Введите код:"
-                    inputType="text"
+                    inputtype="text"
                     className="rounded p-1 border-2 border-emerald-100 focus:outline-none text-center"
                 />
                 {codeError && <span className="text-red-500 text-sm w-47">{codeError}</span>}
