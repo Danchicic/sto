@@ -32,7 +32,7 @@ async def get_buyers_by_model(model_id: int):
 
 
 @router.post("/")
-async def create_buyer(buyer: schemas.BuyerCreate) -> schemas.Buyer:
+async def create_buyer(buyer: schemas.BuyerCreate):
     return await BuyersRepository().add_one(buyer.model_dump())
 
 

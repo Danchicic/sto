@@ -11,6 +11,8 @@ class BaseBuyer(BaseModel):
     year: int
     cost: int
 
+    model_config = ConfigDict(from_attributes=True)
+
 
 class BuyerCreate(BaseBuyer):
     company_id: int
@@ -35,6 +37,7 @@ class BuyersConditionals(BaseModel):
     cost_min: Optional[int]
     year: Optional[int]
     model_config = ConfigDict(from_attributes=True)
+
 
 
 class Buyers(BaseModel):

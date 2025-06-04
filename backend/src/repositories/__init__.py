@@ -51,9 +51,10 @@ class SQLAlchemyRepository(AbstractRepository):
 
     async def add_one(self, data: dict):
         async with async_session() as session, session.begin():
-            query = insert(self.model).values(**data).returning(self.model)
+            query = insert(self.model).options(
+            ).values(**data)
             res_chunked = await session.execute(query)
-            return res_chunked.scalars().one_or_none()
+        return res_chunked.scalars().one_or_none()
 
     async def get_values_by_conditionals(self, conditionals: dict):
         """

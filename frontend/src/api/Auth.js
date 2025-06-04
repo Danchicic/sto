@@ -20,7 +20,6 @@ export async function amILogged() {
         return true;
     } catch (error) {
         console.log(error);
-
         return false;
     }
 
@@ -32,7 +31,7 @@ export async function sendCode(code, phoneNumber) {
         {
             withCredentials: true,
             params: {
-                role: 'user',
+                role: 'shop',
                 code: code,
                 phone_number: phoneNumber
             }
