@@ -1,8 +1,8 @@
 from sqlalchemy import func, select
-from src.database import async_session
-from src.database.models.shared import Buyer, Car
-from src.database.models.shops import Shop
 
+from src.database import async_session
+from src.database.models.shared import *
+from src.database.models.shared import Buyer, Car, Shop
 from . import SQLAlchemyRepository
 
 
@@ -29,3 +29,7 @@ class CarsRepository(SQLAlchemyRepository):
             query = select(self.model).where(self.model.cost == subquery)
             chunked_res = await session.execute(query)
             return chunked_res.scalars().one_or_none()
+
+
+class UserRepository(SQLAlchemyRepository):
+    model = User

@@ -20,7 +20,7 @@ class SuccessMessageSend(BaseModel):
 class User(BaseModel):
     id: int
     phone_number: PhoneNumber
-    role:str
+    role: str
 
 
 class UserAuthInfo(BaseModel):

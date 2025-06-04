@@ -1,9 +1,7 @@
-insert into shops
+insert into shops(id, name)
 values (1, 'German cars shop'),
        (2, 'BMW Shop'),
-       (3, 'Luxury Cars Shop'),
-       (4, 'Japanese Cars Shop'),
-       (5, 'American Muscle Shop');
+       (3, 'Luxury Cars Shop');
 
 insert into car_types(id, name)
 values (1, 'new'),
@@ -33,36 +31,37 @@ insert into transmission_types(id, name)
 values (1, 'Automatic'),
        (2, 'Manual');
 
-insert into cars
-values (1, 1, 1, 1, 1, 2024, 650, 'New bmw from germany', 25000000, 4),
-       (2, 3, 3, 1, 2, 2020, 500, 'Just mercedes', 15000000, 70000),
-       (3, 2, 4, 2, 2, 2020, 500, 'Rally audi quattro', 7000000, 30000),
+insert into cars(id, company_id, model_id, transmission_type_id, auto_type_id, year, engine_power, features, cost,
+                 mileage, shop_id)
+values (1, 1, 1, 1, 1, 2024, 650, 'New bmw from germany', 25000000, 4, 1),
+       (2, 3, 3, 1, 2, 2020, 500, 'Just mercedes', 15000000, 70000, 1),
+       (3, 2, 4, 2, 2, 2020, 500, 'Rally audi quattro', 7000000, 30000, 1),
        -- BMW M5
-       (4, 1, 1, 1, 1, 2023, 600, 'New BMW M5 with advanced features', 30000000, 0),
-       (5, 1, 1, 2, 2, 2018, 560, 'Used BMW M5 manual transmission', 18000000, 30000),
-       (6, 1, 1, 1, 1, 2022, 600, 'Demo BMW M5 with warranty', 32000000, 500),
+       (4, 1, 1, 1, 1, 2023, 600, 'New BMW M5 with advanced features', 30000000, 0, 2),
+       (5, 1, 1, 2, 2, 2018, 560, 'Used BMW M5 manual transmission', 18000000, 30000, 2),
+       (6, 1, 1, 1, 1, 2022, 600, 'Demo BMW M5 with warranty', 32000000, 500, 2),
 
        -- BMW M4
-       (7, 1, 2, 1, 1, 2023, 510, 'New BMW M4 coupe', 28000000, 0),
-       (8, 1, 2, 2, 2, 2019, 450, 'Used BMW M4 manual', 16000000, 40000),
+       (7, 1, 2, 1, 1, 2023, 510, 'New BMW M4 coupe', 28000000, 0, 2),
+       (8, 1, 2, 2, 2, 2019, 450, 'Used BMW M4 manual', 16000000, 40000, 2),
 
        -- Mercedes Maybach
-       (9, 3, 3, 1, 1, 2023, 650, 'Luxury Mercedes Maybach S650', 50000000, 0),
-       (10, 3, 3, 1, 2, 2020, 600, 'Used Mercedes Maybach', 35000000, 20000),
+       (9, 3, 3, 1, 1, 2023, 650, 'Luxury Mercedes Maybach S650', 50000000, 0, 3),
+       (10, 3, 3, 1, 2, 2020, 600, 'Used Mercedes Maybach', 35000000, 20000, 3),
 
        -- Audi Q5
-       (11, 2, 4, 1, 1, 2023, 300, 'New Audi Q5 with quattro', 25000000, 0),
-       (12, 2, 4, 2, 2, 2017, 250, 'Used Audi Q5 manual', 12000000, 60000),
+       (11, 2, 4, 1, 1, 2023, 300, 'New Audi Q5 with quattro', 25000000, 0, 1),
+       (12, 2, 4, 2, 2, 2017, 250, 'Used Audi Q5 manual', 12000000, 60000, 1),
 
        -- Дополнительные автомобили
-       (13, 1, 1, 1, 1, 2021, 550, 'Special edition BMW M5', 27000000, 10000),
-       (14, 3, 3, 1, 1, 2022, 700, 'Limited edition Mercedes Maybach', 55000000, 0),
-       (15, 2, 4, 1, 1, 2020, 320, 'Audi Q5 hybrid', 22000000, 15000),
-       (16, 1, 2, 1, 1, 2023, 520, 'BMW M4 convertible', 31000000, 0),
-       (17, 3, 3, 1, 1, 2019, 620, 'Mercedes Maybach GLS600', 45000000, 25000),
-       (18, 2, 4, 1, 1, 2021, 310, 'Audi Q5 sport package', 24000000, 5000);
+       (13, 1, 1, 1, 1, 2021, 550, 'Special edition BMW M5', 27000000, 10000, 3),
+       (14, 3, 3, 1, 1, 2022, 700, 'Limited edition Mercedes Maybach', 55000000, 0, 3),
+       (15, 2, 4, 1, 1, 2020, 320, 'Audi Q5 hybrid', 22000000, 15000, 3),
+       (16, 1, 2, 1, 1, 2023, 520, 'BMW M4 convertible', 31000000, 0, 3),
+       (17, 3, 3, 1, 1, 2019, 620, 'Mercedes Maybach GLS600', 45000000, 25000, 3),
+       (18, 2, 4, 1, 1, 2021, 310, 'Audi Q5 sport package', 24000000, 5000, 3);
 
-insert into buyers
+insert into buyers(id, company_id, model_id, auto_type_id, cost, fio, latitude, longitude, year)
 values (1, 1, 1, 1, 30000000, 'Данек 52 52', 52.525252, 52.525252, 2024),
        -- Покупатели BMW M5
        (2, 1, 1, 1, 30000000, 'Иванов Иван Иванович', 55.755826, 37.6173, 2024),
@@ -87,3 +86,8 @@ values (1, 1, 1, 1, 30000000, 'Данек 52 52', 52.525252, 52.525252, 2024),
        (13, 1, 2, 1, 31000000, 'Сергеев Сергей Сергеевич', 55.861234, 37.723456, 2024),
        (14, 3, 3, 1, 45000000, 'Павлов Павел Павлович', 55.871234, 37.734567, 2023),
        (15, 2, 4, 1, 24000000, 'Артемьев Артем Артемович', 55.881234, 37.745678, 2021);
+
+insert into roles(id, name)
+values (1, 'user'),
+       (2, 'admin'),
+       (3, 'shop');
