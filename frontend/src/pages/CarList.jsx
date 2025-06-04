@@ -6,13 +6,24 @@ import host from "../shared/api.js";
 
 function CarList() {
     const [cars, setCars] = useState([]);
+    const [reservedCars, setReservedCars] = useState(new Set()); // Храним ID забронированных авто
+    const role = localStorage.getItem('role');
 
     useEffect(() => {
         async function loadCars() {
-            let cars = await axios.get(`${host}/cars/`);
-            setCars(cars.data.cars)
-            // console.log(cars.data['cars']);
+            let response = await axios.get(`${host}/cars/`);
+
+            setCars(response.data.cars);
+            response.data.cars.forEach(
+                (car) => {
+                    if (car.is_reserved) {
+                        reservedCars.add(car.id)
+
+                    }
+                }
+            )
         }
+
         loadCars();
     }, []);
 
@@ -20,6 +31,18 @@ function CarList() {
         axios.delete(`${host}/cars/${id}`).then(() => {
             setCars(cars.filter(car => car.id !== id));
         });
+    };
+
+    const reserveCar = async (id) => {
+        try {
+            const response = await axios.patch(`${host}/cars/reserve_car/${id}`);
+            if (response.status === 200) {
+                // Успешно забронировано — добавляем в Set
+                setReservedCars(prev => new Set(prev).add(id));
+            }
+        } catch (error) {
+            console.error("Ошибка при бронировании", error);
+        }
     };
 
     return (
@@ -49,9 +72,26 @@ function CarList() {
                         <td>{car.transmission_type.name}</td>
                         <td>{car.auto_type.name}</td>
                         <td>{car.cost}</td>
-                        <td>
-                            <Button variant="danger" onClick={() => deleteCar(car.id)}>Удалить</Button>
-                        </td>
+                        {role === 'user' && (
+                            <td>
+                                <Button
+                                    variant="info"
+                                    onClick={() => reserveCar(car.id)}
+                                    disabled={reservedCars.has(car.id)}
+                                    style={{
+                                        backgroundColor: reservedCars.has(car.id) ? '#6c757d' : '',
+                                        borderColor: reservedCars.has(car.id) ? '#6c757d' : ''
+                                    }}
+                                >
+                                    {reservedCars.has(car.id) ? 'Куплено' : 'Купить'}
+                                </Button>
+                            </td>
+                        )}
+                        {role === 'shop' && (
+                            <td>
+                                <Button variant="danger" onClick={() => deleteCar(car.id)}>Удалить</Button>
+                            </td>
+                        )}
                     </tr>
                 ))}
                 </tbody>

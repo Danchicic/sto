@@ -8,6 +8,7 @@ class Car(BaseModel):
     features: str
     engine_power: int
     transmission_type: BaseTypeModel
+    is_reserved: bool
     auto_type: BaseTypeModel
     model: BaseTypeModel
     company: BaseTypeModel

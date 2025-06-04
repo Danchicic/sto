@@ -1,4 +1,4 @@
-from sqlalchemy import func, select
+from sqlalchemy import func, select, update
 
 from src.database import async_session
 from src.database.models.shared import *
@@ -29,6 +29,15 @@ class CarsRepository(SQLAlchemyRepository):
             query = select(self.model).where(self.model.cost == subquery)
             chunked_res = await session.execute(query)
             return chunked_res.scalars().one_or_none()
+
+    async def reserve_car(self, id):
+        async with async_session() as session, session.begin():
+            query = update(
+                self.model
+            ).where(
+                self.model.id == id
+            ).values(is_reserved=True)
+            await session.execute(query)
 
 
 class UserRepository(SQLAlchemyRepository):

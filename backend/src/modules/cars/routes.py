@@ -41,3 +41,8 @@ async def get_new_cars():
 async def get_most_expensive_car():
     res = await CarsRepository().get_most_expensive()
     return {"car": res}
+
+
+@router.patch("/reserve_car/{car_id}")
+async def reserve_car(car_id: int):
+    await CarsRepository().reserve_car(car_id)

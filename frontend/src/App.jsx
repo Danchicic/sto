@@ -14,6 +14,7 @@ function App() {
             try {
                 const backendAuth = await amILogged();
                 setIsAuth(backendAuth);
+
             } catch (e) {
                 switch (e.code) {
                     case 401:

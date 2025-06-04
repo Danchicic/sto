@@ -145,7 +145,7 @@ class Car(Base):
     features: Mapped[str] = mapped_column()
     cost: Mapped[int] = mapped_column()
     mileage: Mapped[int] = mapped_column()
-
+    is_reserved: Mapped[bool] = mapped_column(default=False, nullable=False, server_default="false")
     company: Mapped["CompanyName"] = relationship(
         back_populates="cars",
         lazy="joined",
