@@ -1,19 +1,21 @@
+from typing import Optional
+
 from pydantic import BaseModel, ConfigDict
 from src.core.schemas import BaseTypeModel
 
 
 class Car(BaseModel):
-    year: int
-    id: int
-    features: str
-    engine_power: int
-    transmission_type: BaseTypeModel
-    is_reserved: bool
-    auto_type: BaseTypeModel
-    model: BaseTypeModel
-    company: BaseTypeModel
-    cost: int
-    mileage: int
+    year: Optional[int]
+    id: Optional[int]
+    features: Optional[str]
+    engine_power: Optional[int]
+    transmission_type: Optional[BaseTypeModel]
+    is_reserved: Optional[bool]
+    auto_type: Optional[BaseTypeModel]
+    model: Optional[BaseTypeModel]
+    company: Optional[BaseTypeModel]
+    cost: Optional[int]
+    mileage: Optional[int]
     model_config = ConfigDict(from_attributes=True)
 
 
