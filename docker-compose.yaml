@@ -7,6 +7,17 @@ services:
     ports:
       - "80:80"
 
+  microservice1:
+    build:
+      context: ./microservice1
+    ports:
+      - "8121:8121"
+  microservice2:
+    build:
+      context: ./microservice2
+    ports:
+      - "8120:8120"
+
   backend:
     build:
       context: ./backend
@@ -20,10 +31,11 @@ services:
       REDIS_HOST: redis         # Переменная для подключения к Redis
       REDIS_PORT: 6379          # Порт Redis
     depends_on:
-      postgres:
-        condition: service_healthy
-      redis:                    # Добавляем зависимость от Redis
-        condition: service_healthy
+      - microservice1
+      - microservice2
+      - postgres
+      - redis
+
     ports:
       - "8000:8000"
 
