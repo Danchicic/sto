@@ -1,0 +1,71 @@
+version: '3.8'
+
+services:
+  frontend:
+    image: myfrontimage
+    ports:
+      - "80:80"
+
+  microservice1:
+    image: my_micro1
+    ports:
+      - "8121:8121"
+  microservice2:
+    image: my_micro2
+    ports:
+      - "8120:8120"
+
+  backend:
+    image: mywebimage
+    env_file: backend/.env
+    environment:
+      DATABASE_USERNAME: ${DATABASE_USERNAME}
+      DATABASE_PASSWORD: ${DATABASE_PASSWORD}
+      DATABASE_HOST: postgres
+      DATABASE_PORT: 5432
+      DATABASE_NAME: ${DATABASE_NAME}
+      REDIS_HOST: redis         # Переменная для подключения к Redis
+      REDIS_PORT: 6379          # Порт Redis
+    depends_on:
+      - microservice1
+      - microservice2
+      - postgres
+      - redis
+
+    ports:
+      - "8000:8000"
+
+  postgres:
+    image: bitnami/postgresql:latest
+    env_file: backend/.env
+    environment:
+      POSTGRESQL_USERNAME: ${DATABASE_USERNAME}
+      POSTGRESQL_PASSWORD: ${DATABASE_PASSWORD}
+      POSTGRESQL_DATABASE: ${DATABASE_NAME}
+    volumes:
+      - postgresql_data:/bitnami/postgresql
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DATABASE_USERNAME} -d ${DATABASE_NAME}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"              # Проброс порта Redis
+    volumes:
+      - redis_data:/data         # Сохранение данных Redis
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgresql_data:
+    driver: local
+  redis_data:
+    driver: local
